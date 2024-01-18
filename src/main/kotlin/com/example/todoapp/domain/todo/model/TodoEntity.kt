@@ -1,5 +1,6 @@
 package com.example.todoapp.domain.todo.model
 
+import com.example.todoapp.domain.comment.model.CommentEntity
 import com.example.todoapp.domain.todo.dto.TodoResponseDto
 import jakarta.persistence.*
 import java.time.LocalDateTime
@@ -14,7 +15,9 @@ class TodoEntity(
     @Column(name = "nick_name")
     var nickName:String,
     @Column(name = "create_at")
-    var creatAt:LocalDateTime
+    var creatAt:LocalDateTime,
+    @OneToMany(mappedBy="todo")
+    val comments:List<CommentEntity> = emptyList()
 ){
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

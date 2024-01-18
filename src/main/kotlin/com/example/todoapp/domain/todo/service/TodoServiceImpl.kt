@@ -1,7 +1,9 @@
 package com.example.todoapp.domain.todo.service
 
+import com.example.todoapp.domain.comment.repository.CommentRepository
 import com.example.todoapp.domain.exception.ModelNotFoundException
 import com.example.todoapp.domain.todo.dto.CreateTodoDto
+import com.example.todoapp.domain.todo.dto.RetrieveTodoDto
 import com.example.todoapp.domain.todo.dto.TodoResponseDto
 import com.example.todoapp.domain.todo.dto.UpdateTodoDto
 import com.example.todoapp.domain.todo.model.TodoEntity
@@ -13,11 +15,11 @@ import org.springframework.transaction.annotation.Transactional
 
 @Service
 class TodoServiceImpl(
-    private val todoRepository: TodoRepository
+    private val todoRepository: TodoRepository,
 ):TodoService {// todoRepository의 객체를 주입받고 TodoService의 함수를 상속 받음
-    override fun getTodo(todoId:Long):TodoResponseDto {
+    override fun getTodo(todoId:Long):RetrieveTodoDto? {
         val findTodo = todoRepository.findByIdOrNull(todoId)?: throw ModelNotFoundException("todo",todoId)
-        return findTodo.toResponse()
+        return findTodo?.let { RetrieveTodoDto.from(it) }
     }//하나의 투두리스트를 가져오는 함수구현부
 
     override fun getTodoList():List<TodoResponseDto> {

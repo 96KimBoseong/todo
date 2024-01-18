@@ -1,11 +1,12 @@
 package com.example.todoapp.domain.todo.service
 
 import com.example.todoapp.domain.todo.dto.CreateTodoDto
+import com.example.todoapp.domain.todo.dto.RetrieveTodoDto
 import com.example.todoapp.domain.todo.dto.TodoResponseDto
 import com.example.todoapp.domain.todo.dto.UpdateTodoDto
 
 interface TodoService {
-    fun getTodo(todoId:Long):TodoResponseDto
+    fun getTodo(todoId:Long):RetrieveTodoDto?
     fun getTodoList():List<TodoResponseDto>
     fun createTodo(createTodoDto: CreateTodoDto):TodoResponseDto
     fun updateTodo(todoId: Long,updateTodoDto: UpdateTodoDto):TodoResponseDto

@@ -1,6 +1,7 @@
 package com.example.todoapp.domain.todo.controller
 
 import com.example.todoapp.domain.todo.dto.CreateTodoDto
+import com.example.todoapp.domain.todo.dto.RetrieveTodoDto
 import com.example.todoapp.domain.todo.dto.TodoResponseDto
 import com.example.todoapp.domain.todo.dto.UpdateTodoDto
 import com.example.todoapp.domain.todo.service.TodoService
@@ -23,7 +24,7 @@ class TodoController(
     @GetMapping("/{todoId}")
     fun getTodo(
         @PathVariable todoId:Long
-    ):ResponseEntity<TodoResponseDto>{
+    ):ResponseEntity<RetrieveTodoDto>{
         return ResponseEntity
             .status(HttpStatus.OK)
             .body(todoService.getTodo(todoId))
