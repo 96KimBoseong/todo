@@ -19,6 +19,14 @@ class TodoEntity(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     var todoId:Long? = null
+    @Column(name = "completed")
+    private  var iscompleted:Boolean = false
+    val completed:Boolean
+        get() = iscompleted
+    fun complete(){
+       iscompleted = true
+    }
+    //외부에서 접근 불가하게 하려고 이렇게 만들었다는데 이해안됨 문법부족 ;;
 }
 fun TodoEntity.toResponse():TodoResponseDto{
     return TodoResponseDto(
@@ -26,7 +34,8 @@ fun TodoEntity.toResponse():TodoResponseDto{
         title = title,
         content = content,
         nickName = nickName,
-        createAt = creatAt
+        createAt = creatAt,
+        completed = completed
     )
 }
 //엔티티 안의 값을 반화해줘야 하니까 확장함수를 쓴거임 dto안에 넣어주는거 반환용ㅇㅇ

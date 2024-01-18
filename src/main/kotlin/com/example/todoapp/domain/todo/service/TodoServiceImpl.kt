@@ -49,4 +49,14 @@ class TodoServiceImpl(
         todoRepository.delete(deleteTodo)
 
     }
+    @Transactional
+    override fun completedTodo(todoId: Long):TodoResponseDto {
+        val todoCompleted = todoRepository.findByIdOrNull(todoId)?: throw ModelNotFoundException("todo",todoId)
+
+            todoCompleted?.let{
+                it.complete()
+                todoRepository.save(it)
+            }
+        return todoCompleted.toResponse()
+    }
 }

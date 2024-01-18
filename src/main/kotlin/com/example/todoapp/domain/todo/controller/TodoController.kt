@@ -56,11 +56,20 @@ class TodoController(
             .status(HttpStatus.OK)
             .body(todoService.updateTodo(todoId, updateTodoDto))
     }
+    @PutMapping("/{todoId}/complete")
+    fun completedTodo(
+        @PathVariable todoId:Long
+    ):ResponseEntity<TodoResponseDto>{
+        return ResponseEntity
+            .status(HttpStatus.OK)
+            .body(todoService.completedTodo(todoId))
+    }
     @DeleteMapping("/{todoId}")
     fun deleteTodo(
         @PathVariable todoId: Long,
     ):ResponseEntity<Unit>
     {
+        todoService.deleteTodo(todoId)
         return ResponseEntity
             .status(HttpStatus.NO_CONTENT)
             .build()
