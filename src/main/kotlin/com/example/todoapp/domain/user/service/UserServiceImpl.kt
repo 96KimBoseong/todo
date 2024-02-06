@@ -1,7 +1,6 @@
 package com.example.todoapp.domain.user.service
 
-import com.example.todoapp.domain.exception.ModelNotFoundException
-import com.example.todoapp.domain.user.Exception.InvalidCredentialException
+import com.example.todoapp.domain.exception.InvalidCredentialException
 import com.example.todoapp.domain.user.dto.LoginDto
 import com.example.todoapp.domain.user.dto.LoginResponseDto
 import com.example.todoapp.domain.user.dto.SignUpDto
@@ -28,7 +27,7 @@ class UserServiceImpl(
         val role = when(signUpDto.role){
             "ADMIN" -> UserRole.ADMIN
             "USER" -> UserRole.USER
-            else -> throw Exception("Invalid role")
+            else -> throw IllegalArgumentException("Invalid role")
         }
         return userRepository.save(
             UserEntity(
@@ -41,7 +40,7 @@ class UserServiceImpl(
     }
 //
 override fun login(loginDto: LoginDto): LoginResponseDto {
-    val userFind = userRepository.findByEmail(loginDto.email) ?: throw Exception("사용자를 찾을 수 없습니다")
+    val userFind = userRepository.findByEmail(loginDto.email) ?: throw IllegalStateException("사용자를 찾을 수 없습니다")
 
     if (userFind.role.name == loginDto.role && passwordEncoder.matches(loginDto.password, userFind.password)) {
         return LoginResponseDto(
@@ -52,7 +51,7 @@ override fun login(loginDto: LoginDto): LoginResponseDto {
             )
         )
     } else {
-        throw InvalidCredentialException()
+        throw InvalidCredentialException("닉네임 또는 패스워드를 확인해주세요")
     }
  }
 }

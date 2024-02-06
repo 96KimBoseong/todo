@@ -5,6 +5,7 @@ import com.example.todoapp.domain.user.dto.LoginResponseDto
 import com.example.todoapp.domain.user.dto.SignUpDto
 import com.example.todoapp.domain.user.dto.UserResponseDto
 import com.example.todoapp.domain.user.service.UserService
+import jakarta.validation.Valid
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.PostMapping
@@ -18,6 +19,7 @@ class UserController(
 ) {
     @PostMapping("/signUp")
     fun signUp(
+      @Valid
       @RequestBody signUpDto: SignUpDto
     ):ResponseEntity<UserResponseDto>{
        return ResponseEntity
@@ -26,6 +28,7 @@ class UserController(
     }
     @PostMapping("/Login")
     fun login(
+        @Valid
         @RequestBody loginDto: LoginDto
     ):ResponseEntity<LoginResponseDto>{
         return ResponseEntity

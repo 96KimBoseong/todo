@@ -13,6 +13,7 @@ class JwtAuthenticationToken(
         super.setAuthenticated(true)
         super.setDetails(details)
     }
+    //초기화 -
 
     override fun getCredentials() = null
 

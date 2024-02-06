@@ -13,4 +13,6 @@ data class UserPrincipal(
         email,
         roles.map { SimpleGrantedAuthority("ROLE_$it") }
     )
+
+    //부생성자
 }
