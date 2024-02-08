@@ -7,9 +7,9 @@ spring:
     hibernate:
       ddl-auto: update
   datasource:
-    url: jdbc:postgresql://aws-0-ap-northeast-2.pooler.supabase.com:5432/postgres
-    username: postgres.vazqpaobojyddehsxbam
-    password: rlaqhtjd8934
+    url:
+    username:
+    password:
 logging:
   level:
     org:
