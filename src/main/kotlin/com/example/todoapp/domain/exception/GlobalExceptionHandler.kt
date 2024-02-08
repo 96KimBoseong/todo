@@ -40,4 +40,9 @@ class GlobalExceptionHandler {
             .status(HttpStatus.BAD_REQUEST)
             .body(ErrorResponseDto("${e.bindingResult.fieldErrors.first().defaultMessage}"))
     }
+    @ExceptionHandler(CustomException::class)
+    fun handlePasswordException(e: CustomException): ResponseEntity<ErrorResponseDto> {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ErrorResponseDto(message = e.message))
+    }
+
 }

@@ -2,6 +2,7 @@ package com.example.todoapp.domain.todo.model
 
 import com.example.todoapp.domain.comment.model.CommentEntity
 import com.example.todoapp.domain.todo.dto.TodoResponseDto
+import com.example.todoapp.domain.user.model.UserEntity
 import jakarta.persistence.*
 import java.time.LocalDateTime
 
@@ -17,7 +18,10 @@ class TodoEntity(
     @Column(name = "create_at")
     var creatAt:LocalDateTime,
     @OneToMany(mappedBy="todo")
-    val comments:List<CommentEntity> = emptyList()
+    val comments:List<CommentEntity> = emptyList(),
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    var user:UserEntity
 ){
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -29,6 +33,8 @@ class TodoEntity(
     fun complete(){
        iscompleted = true
     }
+
+
     //외부에서 접근 불가하게 하려고 이렇게 만들었다는데 이해안됨 문법부족 ;;
 }
 fun TodoEntity.toResponse():TodoResponseDto{

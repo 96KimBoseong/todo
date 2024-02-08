@@ -18,8 +18,12 @@ import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 import com.example.todoapp.infra.security.UserPrincipal
+import jakarta.validation.Valid
+import org.springframework.validation.annotation.Validated
+
 @RequestMapping("/todos")
 @RestController
+@Validated
 class TodoController(
     private val todoService: TodoService
 ) {
@@ -32,7 +36,7 @@ class TodoController(
     ):ResponseEntity<RetrieveTodoDto>{
         return ResponseEntity
             .status(HttpStatus.OK)
-            .body(todoService.getTodo(user.id))
+            .body(todoService.getTodo(todoId,user.id))
     }
     //todoId를 가지고 데이터 베이스에 접근할꺼고 반환형을 ResponseEntity를 사용해서 TodoResponseDto로 반환할꺼임
     //실제로 보내는 부분은 ResponseEntity를 사용하여 상태코드는 OK 클라이언트가 받게될 응답의 본문todoId를 이용한 Impl에있는 함수를 실행한 값?
@@ -45,12 +49,13 @@ class TodoController(
     //위와 같으나 리스트로 반환
     @PostMapping
     fun createTodo(
-        @RequestBody createTodoDto: CreateTodoDto
+        @Valid@RequestBody createTodoDto: CreateTodoDto,
+        @AuthenticationPrincipal user: UserPrincipal
     ):ResponseEntity<TodoResponseDto>
     {
         return ResponseEntity
             .status(HttpStatus.CREATED)
-            .body(todoService.createTodo(createTodoDto))
+            .body(todoService.createTodo(createTodoDto, user.id))
     }
     @PutMapping("/{todoId}")
     fun updateTodo(
@@ -61,7 +66,7 @@ class TodoController(
     {
         return ResponseEntity
             .status(HttpStatus.OK)
-            .body(todoService.updateTodo(user.id, updateTodoDto))
+            .body(todoService.updateTodo(todoId,updateTodoDto, user.id))
     }
     @PutMapping("/{todoId}/complete")
     fun completedTodo(
@@ -70,7 +75,7 @@ class TodoController(
     ):ResponseEntity<TodoResponseDto>{
         return ResponseEntity
             .status(HttpStatus.OK)
-            .body(todoService.completedTodo(user.id))
+            .body(todoService.completedTodo(todoId, user.id))
     }
     @DeleteMapping("/{todoId}")
     //@PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
@@ -79,7 +84,7 @@ class TodoController(
         @AuthenticationPrincipal user:UserPrincipal
     ):ResponseEntity<Unit>
     {
-        todoService.deleteTodo(user.id)
+        todoService.deleteTodo(todoId,user.id)
         return ResponseEntity
             .status(HttpStatus.NO_CONTENT)
             .build()
@@ -87,4 +92,3 @@ class TodoController(
 
 
 }
-//todo와 user 연결 해주기

@@ -6,14 +6,15 @@ data class SignUpDto(
     @field:Pattern(
         regexp = "^[a-zA-Z0-9]{3,}$",
         message = "이름은 3자이상 알파벳 대소문자 및 숫자로 구성"
-
     )
     val name:String,
+
     @field:Pattern(
         regexp = "^[a-zA-Z0-9]{4,}$",
         message = "비밀번호는 4자이상 알파벳 대소문자 및 숫자로 구성"
     )
     val password:String,
+
     @field:Pattern(
         regexp = "^[a-zA-Z0-9]{4,}$",
         message = "비밀번호는 4자이상 알파벳 대소문자 및 숫자로 구성"
