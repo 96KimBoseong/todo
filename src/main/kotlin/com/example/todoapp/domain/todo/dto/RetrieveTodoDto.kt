@@ -8,7 +8,7 @@ data class RetrieveTodoDto(
     val todoId:Long,
     val title:String,
     val content:String,
-    val createAt: LocalDateTime,
+    //val createAt: LocalDateTime,
     val nickName:String,
     val completed:Boolean,
     val commentList:List<CommentResponseDto>
@@ -19,7 +19,7 @@ data class RetrieveTodoDto(
                 todoId = todoEntity.todoId!!,
                 title = todoEntity.title,
                 content = todoEntity.content,
-                createAt = todoEntity.creatAt,
+                //createAt = todoEntity.creatAt,
                 nickName = todoEntity.nickName,
                 completed = todoEntity.completed,
                 commentList = todoEntity.comments.map { CommentResponseDto.from(it) }

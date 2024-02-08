@@ -1,0 +1,20 @@
+spring:
+  config:
+    activate:
+      on-profile: test
+  jpa:
+    open-in-view: true
+    hibernate:
+      ddl-auto: update
+  datasource:
+    url:
+    username:
+    password:
+logging:
+  level:
+    org:
+      hibernate:
+        SQL: debug
+        orm:
+          jdbc:
+            bind: trace
