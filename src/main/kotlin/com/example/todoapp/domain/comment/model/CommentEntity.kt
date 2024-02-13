@@ -3,14 +3,7 @@ package com.example.todoapp.domain.comment.model
 import com.example.todoapp.domain.comment.dto.CommentResponseDto
 import com.example.todoapp.domain.comment.dto.UpdateCommentDto
 import com.example.todoapp.domain.todo.model.TodoEntity
-import jakarta.persistence.Column
-import jakarta.persistence.Entity
-import jakarta.persistence.GeneratedValue
-import jakarta.persistence.GenerationType
-import jakarta.persistence.Id
-import jakarta.persistence.JoinColumn
-import jakarta.persistence.ManyToOne
-import jakarta.persistence.Table
+import jakarta.persistence.*
 
 @Entity
 @Table(name = "comment")
@@ -24,10 +17,14 @@ class CommentEntity(
     var commentName:String,
     @Column(name = "comment_password")
     var commentPassword:String,
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "todo_id")
-    var todo: TodoEntity
+    var todo: TodoEntity,
+    @Column(name = "user_id")
+    var userId:Long
+
 ) {
+
     fun changContent(updateCommentDto: UpdateCommentDto){
         this.commentContent =updateCommentDto.commentContent
     }

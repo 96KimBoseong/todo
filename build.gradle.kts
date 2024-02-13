@@ -40,13 +40,16 @@ noArg {
     annotation("jakarta.persistence.MappedSuperclass")
     annotation("jakarta.persistence.Embeddable")
 }
+val queryDslVersion = "5.0.0"
 dependencies {
     implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
     implementation("org.jetbrains.kotlin:kotlin-reflect")
     implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.2.0")//swagger
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")//jpa
-
+    implementation("org.springframework.boot:spring-boot-starter-validation")
+    implementation("com.querydsl:querydsl-jpa:$queryDslVersion:jakarta") // 추가!
+    kapt("com.querydsl:querydsl-apt:$queryDslVersion:jakarta") // 추가!
     implementation("org.springframework.boot:spring-boot-starter-security")
     implementation("io.jsonwebtoken:jjwt-api:0.12.3")
     testImplementation("io.kotest:kotest-runner-junit5:$kotestVersion") // 추가 !!

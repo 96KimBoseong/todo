@@ -4,6 +4,8 @@ import io.jsonwebtoken.Claims
 import io.jsonwebtoken.Jws
 import io.jsonwebtoken.Jwts
 import io.jsonwebtoken.security.Keys
+import jakarta.servlet.http.Cookie
+import jakarta.servlet.http.HttpServletResponse
 import org.apache.commons.lang3.CharSet
 import org.springframework.stereotype.Component
 import java.nio.charset.StandardCharsets
@@ -48,5 +50,13 @@ class JwtPlugin {
             .claims(claims)
             .signWith(key)
             .compact()
+    }
+
+    fun cookieToken(response:HttpServletResponse,jwt: String){
+        val cookie = Cookie("cookie",jwt)
+        cookie.path ="/"
+        cookie.isHttpOnly = true
+        cookie.secure = true
+        response.addCookie(cookie)
     }
 }

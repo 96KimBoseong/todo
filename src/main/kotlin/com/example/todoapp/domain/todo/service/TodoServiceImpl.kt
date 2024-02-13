@@ -24,16 +24,17 @@ class TodoServiceImpl(
     private val todoRepository: TodoRepository,
     private val userRepository: UserRepository
 ):TodoService {// todoRepository의 객체를 주입받고 TodoService의 함수를 상속 받음
-    override fun getTodo(todoId:Long,userId: Long):RetrieveTodoDto? {
+    override fun getTodo(todoId:Long):RetrieveTodoDto? {
         val findTodo = todoRepository.findByIdOrNull(todoId)?: throw ModelNotFoundException("todo",todoId)
-        findTodo.user
+
 
         return findTodo?.let { RetrieveTodoDto.from(it) }
     }//principal 빼기
     //
 
     override fun getTodoList():List<TodoResponseDto> {
-        return todoRepository.findAll().map{it.toResponse()}
+        return todoRepository.sortByDate().map{it.toResponse()}
+        //오름차순 내림차순 둘다 해봄 적용됨 완료 !!
     }
 
     @Transactional
@@ -48,13 +49,13 @@ class TodoServiceImpl(
                 user = users
             )
         ).toResponse()
-    }//검증하고
+    }//
     @Transactional
     override fun updateTodo(todoId: Long,updateTodoDto: UpdateTodoDto,userId: Long):TodoResponseDto {
         val updateTodo = todoRepository.findByIdOrNull(todoId)?: throw ModelNotFoundException("todo",todoId)
         val users = userRepository.findByIdOrNull(userId)?: throw  ModelNotFoundException("user",userId)
         if (updateTodo.user !=users){
-            throw CustomException("dsad")
+            throw CustomException("게시물의 업데이트 권한이 없습니다")
             //에러 순서 커스텀 -> 필터 -> 사용자 Exception
         }else{
             updateTodo.title = updateTodoDto.title

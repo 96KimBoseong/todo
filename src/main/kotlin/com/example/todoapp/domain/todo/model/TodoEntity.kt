@@ -17,9 +17,9 @@ class TodoEntity(
     var nickName:String,
     @Column(name = "create_at")
     var creatAt:LocalDateTime,
-    @OneToMany(mappedBy="todo")
+    @OneToMany(mappedBy="todo", fetch = FetchType.LAZY, cascade = [CascadeType.ALL], orphanRemoval = true)
     val comments:List<CommentEntity> = emptyList(),
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     var user:UserEntity
 ){

@@ -1,5 +1,6 @@
 package com.example.todoapp.domain.user.model
 
+import com.example.todoapp.domain.todo.model.TodoEntity
 import com.example.todoapp.domain.user.dto.SignUpDto
 import com.example.todoapp.domain.user.dto.UserResponseDto
 import jakarta.persistence.*
@@ -16,7 +17,10 @@ class UserEntity(
     var password:String,
     @Enumerated(EnumType.STRING)
     @Column(name = "role")
-    var role: UserRole
+    var role: UserRole,
+
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = [CascadeType.ALL], orphanRemoval = true)
+    var todos:MutableList<TodoEntity> = mutableListOf()
 ) {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
