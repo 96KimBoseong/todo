@@ -29,14 +29,19 @@ class UserServiceImpl(
             "USER" -> UserRole.USER
             else -> throw IllegalArgumentException("Invalid role")
         }
-        return userRepository.save(
-            UserEntity(
-                name = signUpDto.name,
-                email = signUpDto.email,
-                password = passwordEncoder.encode(signUpDto.password),
-                role = role
-            )
-        ).toUserResponse()
+        if(signUpDto.password == signUpDto.passwordConfirm){
+            return userRepository.save(
+                UserEntity(
+                    name = signUpDto.name,
+                    email = signUpDto.email,
+                    password = passwordEncoder.encode(signUpDto.password),
+                    role = role
+                )
+            ).toUserResponse()
+        }else{
+            throw Exception("password 불일치")
+        }
+
     }
 //
 override fun login(loginDto: LoginDto): LoginResponseDto {
