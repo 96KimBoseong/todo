@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 import com.example.todoapp.infra.security.UserPrincipal
 import jakarta.validation.Valid
+import org.hibernate.annotations.Fetch
 import org.springframework.validation.annotation.Validated
 
 @RequestMapping("/todos")
@@ -32,24 +33,22 @@ class TodoController(
     @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
     fun getTodo(
         @PathVariable todoId:Long,
-        @AuthenticationPrincipal user: UserPrincipal
     ):ResponseEntity<RetrieveTodoDto>{
         return ResponseEntity
             .status(HttpStatus.OK)
-            .body(todoService.getTodo(todoId,user.id))
+            .body(todoService.getTodo(todoId))
     }
-    //todoId를 가지고 데이터 베이스에 접근할꺼고 반환형을 ResponseEntity를 사용해서 TodoResponseDto로 반환할꺼임
-    //실제로 보내는 부분은 ResponseEntity를 사용하여 상태코드는 OK 클라이언트가 받게될 응답의 본문todoId를 이용한 Impl에있는 함수를 실행한 값?
+
     @GetMapping()
     fun getTodoList():ResponseEntity<List<TodoResponseDto>>{
         return ResponseEntity
             .status(HttpStatus.OK)
             .body(todoService.getTodoList())
     }
-    //위와 같으나 리스트로 반환
+
     @PostMapping
     fun createTodo(
-        @Valid@RequestBody createTodoDto: CreateTodoDto,
+        @Valid @RequestBody createTodoDto: CreateTodoDto,
         @AuthenticationPrincipal user: UserPrincipal
     ):ResponseEntity<TodoResponseDto>
     {
@@ -78,7 +77,7 @@ class TodoController(
             .body(todoService.completedTodo(todoId, user.id))
     }
     @DeleteMapping("/{todoId}")
-    //@PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
+    @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
     fun deleteTodo(
         @PathVariable todoId: Long,
         @AuthenticationPrincipal user:UserPrincipal
@@ -89,6 +88,7 @@ class TodoController(
             .status(HttpStatus.NO_CONTENT)
             .build()
     }
+
 
 
 }

@@ -7,7 +7,7 @@ import com.example.todoapp.domain.todo.dto.UpdateTodoDto
 import com.example.todoapp.infra.security.UserPrincipal
 
 interface TodoService {
-    fun getTodo(todoId:Long,userId: Long):RetrieveTodoDto?
+    fun getTodo(todoId:Long):RetrieveTodoDto?
     fun getTodoList():List<TodoResponseDto>
     fun createTodo(createTodoDto: CreateTodoDto,userId: Long):TodoResponseDto
     fun updateTodo(todoId: Long,updateTodoDto: UpdateTodoDto,userId: Long):TodoResponseDto

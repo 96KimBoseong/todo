@@ -8,7 +8,7 @@ import com.example.todoapp.domain.comment.dto.UpdateCommentDto
 interface CommentService {
     //fun getCommentById(commentId:Long):CommentResponseDto
     //fun getCommentListById():List<CommentResponseDto>
-    fun createComment(createCommentDto: CreateCommentDto):CommentResponseDto
-    fun updateComment(commentId: Long,updateCommentDto: UpdateCommentDto):CommentResponseDto
-    fun deleteComment(commentId: Long,deleteCommentDto: DeleteCommentDto)
+    fun createComment(createCommentDto: CreateCommentDto,userId:Long):CommentResponseDto
+    fun updateComment(commentId: Long,updateCommentDto: UpdateCommentDto,userId:Long):CommentResponseDto
+    fun deleteComment(commentId: Long,deleteCommentDto: DeleteCommentDto,userId:Long)
 }

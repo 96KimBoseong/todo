@@ -15,7 +15,7 @@ data class CommentResponseDto(
                 commentId = commentEntity.commentId!!,
                 commentContent = commentEntity.commentContent,
                 commentName = commentEntity.commentName,
-                todoId = commentEntity.todo.todoId?: throw Exception("target todo is not persisted")
+                todoId = commentEntity.todo.todoId?: throw Exception("target todo is not persisted"),
             )
         }
     }
